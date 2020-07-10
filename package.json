@@ -2,8 +2,9 @@
   "name": "partner_server",
   "version": "1.0.0",
   "description": "An example server for use and guidance by myEGO2GO partners connecting to our API",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "start": "tsc && node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/myego2go/partner_server/issues"
   },
-  "homepage": "https://github.com/myego2go/partner_server#readme"
+  "homepage": "https://github.com/myego2go/partner_server#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.7",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.6"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
