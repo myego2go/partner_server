@@ -1,0 +1,19 @@
+{
+  "name": "partner_server",
+  "version": "1.0.0",
+  "description": "An example server for use and guidance by myEGO2GO partners connecting to our API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myego2go/partner_server.git"
+  },
+  "author": "Manish Sudeshkumar & Radley Sidwell-Lewis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/myego2go/partner_server/issues"
+  },
+  "homepage": "https://github.com/myego2go/partner_server#readme"
+}
