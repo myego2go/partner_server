@@ -1,10 +1,15 @@
 import express from 'express';
+import dotenv from 'dotenv';
+
+import { invokeCallback } from './controller';
+
+dotenv.config();
 
 const app = express();
-const port = 3000;
-app.get('/', (req, res) => {
-  res.send('The sedulous hyena ate the antelope!');
-});
+const port = 3088;
+
+app.post('/routes', (req, res, next) => console.log(req.body, req.headers, res));
+
 app.listen(port, err => {
   if (err) {
     return console.error(err);
