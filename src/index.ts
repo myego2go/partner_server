@@ -7,8 +7,9 @@ dotenv.config();
 
 const app = express();
 const port = 3088;
+app.use(express.json({ limit: "50mb" }));
 
-app.post('/routes', (req, res, next) => console.log(req.body, req.headers, res));
+app.post('/', (req, res, next) => console.log(req.body, req.headers));
 
 app.listen(port, err => {
   if (err) {
