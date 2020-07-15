@@ -7,9 +7,6 @@ const api_key = process.env.API_KEY;
 
 const invokeCallback = (req: Request, res: Response, next: NextFunction) => {
   console.log('POST: Callback URL has been contacted');
-  console.log('request:', req);
-  console.log('body:', req.body);
-  console.log('env', process.env)
   /* STEP: send OK on receipt of "user_id", "contract_id" */
   const { user_id, contract_id } = req.body;
   if (user_id && contract_id) res.status(200).send();
@@ -40,3 +37,26 @@ const invokeCallback = (req: Request, res: Response, next: NextFunction) => {
 export {
   invokeCallback
 };
+
+/*
+{
+  status: 0,
+  message: 'read_contract_success',
+  _data: {
+    clientId: '0fb78c06-618d-5ec9-be44-af89547c4796',
+    contractId: 'b0874a60-c5cf-11ea-8832-e5a0f791b2fc',
+    contract_version: 'x3o9iRsBBUcB92pn01UO_bazi67o7itC',
+    createDate: '2020-07-14T12:43:57.290Z',
+    partnerId: '3b1acc60-baf4-11ea-be50-cf2f41ea71f9',
+    payload: {
+      partner_id: '3b1acc60-baf4-11ea-be50-cf2f41ea71f9',
+      template_id: '0a3330e0-bf74-11ea-8da0-4b0fb5eb875c',
+      payload: [Object],
+      contractId: 'b0874a60-c5cf-11ea-8832-e5a0f791b2fc'
+    },
+    templateId: '0a3330e0-bf74-11ea-8da0-4b0fb5eb875c',
+    updateDate: '2020-07-14T12:43:57.290Z'
+  }
+}
+
+*/
