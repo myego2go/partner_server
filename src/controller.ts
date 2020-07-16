@@ -2,8 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import get from 'request-promise';
 import fs from 'fs';
 import crypto from 'crypto';
-import dotenv from 'dotenv';
-dotenv.config();
 
 const api_url = process.env.EGO_API;
 const partner_id = process.env.PARTNER_ID;
@@ -32,9 +30,6 @@ const _decryptPayload = ({ encryptedContract, encryptedAESKeyPartner, _privateKe
 const invokeCallback = (req: Request, res: Response, next: NextFunction) => {
 
   console.log('POST: Callback URL has been contacted');
-
-  console.log("api_key:",api_key);
-  console.log("partnerid:",partner_id);
 
   /* STEP 2: send OK on receipt of "user_id", "contract_id" */
   const { user_id, contract_id } = req.body;
@@ -70,7 +65,7 @@ const invokeCallback = (req: Request, res: Response, next: NextFunction) => {
     /* STEP 7: receives decrypted contract */
     .then((data) => {
       /* This data can be used to connect database etc.. */
-      console.log("data:",data);  
+      console.log("Decrypted Contract:",data);  
     })
     .catch((err: Error) => {
       console.log(`ERROR: ${err.message}`);

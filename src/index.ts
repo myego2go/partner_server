@@ -1,6 +1,9 @@
 import express from 'express';
-
+import dotenv from 'dotenv';
+dotenv.config();
 import { invokeCallback } from './controller';
+
+
 
 const app = express();
 const port = 3088;
