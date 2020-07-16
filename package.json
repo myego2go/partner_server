@@ -1,0 +1,32 @@
+{
+  "name": "partner_server",
+  "version": "1.0.0",
+  "description": "An example server for use and guidance by myEGO2GO partners connecting to our API",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsc && node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myego2go/partner_server.git"
+  },
+  "author": "Manish Sudeshkumar & Radley Sidwell-Lewis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/myego2go/partner_server/issues"
+  },
+  "homepage": "https://github.com/myego2go/partner_server#readme",
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.7",
+    "typescript": "^3.9.6"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5"
+  }
+}
