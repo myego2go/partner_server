@@ -21,7 +21,7 @@ $ npm install
 * Download the **private_key** on signing up and store it under the repo as ***private_key.ego***
 * Setup the environment file (.env) with **PARTNER_ID** and **API_KEY**
   * **PARTNER_ID** will be provided by Myego customer support
-  * **API_Key** can be fetched by generating it on partner portal
+  * **API_KEY** can be fetched by generating it on partner portal
 ```
 EGO_API = https://api-partner.myego2go-staging.com/';
 PARTNER_ID=''; 
