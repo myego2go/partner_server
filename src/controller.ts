@@ -71,7 +71,7 @@ const invokeCallback = (req: Request, res: Response, next: NextFunction) => {
 
     /* STEP 6: Decrypt the Contract */
     .then((data) =>{
-      return _decryptPayload({ data, _privateKey });
+      return _decryptPayload({ encContract: data, _privateKey });
     })
 
     /* STEP 7: receives decrypted contract */
