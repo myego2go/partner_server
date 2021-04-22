@@ -9,21 +9,33 @@ const api_key = process.env.API_KEY;
 
 const algorithm = 'aes-256-cbc';
 
-/* STEP 1: Read Private Key from file saved locally */
+/* STEP 1: Read Private Key from file saved locally - ensure proper FORMAT! */
 const _privateKey = fs.readFileSync('private_key.ego', 'utf8');
 
 /* Private method for decrypting a specific contract */
-const _decryptPayload = ({ encryptedContract, encryptedAESKeyPartner, _privateKey }) => {
+const _decryptPayload = ({ encContract, _privateKey }) => {
   try {
+    const encryptedAESKeyPartner = encContract.keys.partnerKey;
     const decryptedKey = crypto.privateDecrypt(_privateKey, Buffer.from(encryptedAESKeyPartner, "base64")).toString('utf8');
-    const [iv, encryptedText] = encryptedContract.split(':').map(part => Buffer.from(part, 'hex'));
-    const decipher = crypto.createDecipheriv(algorithm, Buffer.from(decryptedKey, 'hex'), iv);
-    let decrypted = decipher.update(encryptedText);
-    decrypted = Buffer.concat([decrypted, decipher.final()]);
-    return JSON.parse(decrypted.toString());
+    const readableContract = {
+      ...encContract,
+      requiredDocuments: JSON.parse(_decrypt(encContract.requiredDocuments.message, decryptedKey)),
+      optionalDocuments: JSON.parse(_decrypt(encContract.optionalDocuments.message, decryptedKey)),
+      subjectMatter: JSON.parse(_decrypt(encContract.subjectMatter.message, decryptedKey)),
+    }; 
+    return readableContract;
   } catch (err) {
     console.log('Decryption Error:', err.message);
   }
+};
+
+/* Private method for decrypting a specific message */
+const _decrypt = (text,key) => {
+  const [iv, encryptedText] = text.split(':').map(part => Buffer.from(part, 'hex'));
+  const decipher = crypto.createDecipheriv(algorithm, Buffer.from(key, 'hex'), iv);
+  let decrypted = decipher.update(encryptedText);
+  decrypted = Buffer.concat([decrypted, decipher.final()]);
+  return decrypted.toString();
 };
 
 /* receive contract_id and user_id and also decrypt Contract*/ 
@@ -39,7 +51,8 @@ const invokeCallback = (req: Request, res: Response, next: NextFunction) => {
   const options = {
     uri: `${api_url}/partner/api/${partner_id}/${user_id}/contracts/${contract_id}`,
     headers: {
-      'x-myego2go-partner-api-key': api_key
+      'x-myego2go-partner-api-key': api_key,
+      'x-partner-identifier': 'partner_id'
     },
     json: true
   };
@@ -52,13 +65,13 @@ const invokeCallback = (req: Request, res: Response, next: NextFunction) => {
     })
 
     /* STEP 5: Exrtract encrypted payload from the response*/
-    .then(({_data}) => {
-      return _data.payload.payload;
+    .then((res) => {
+      return res._data;
     })
 
     /* STEP 6: Decrypt the Contract */
-    .then(({ encryptedContract, encryptedAESKeyPartner }) =>{
-      return _decryptPayload({ encryptedContract, encryptedAESKeyPartner, _privateKey });
+    .then((data) =>{
+      return _decryptPayload({ data, _privateKey });
     })
 
     /* STEP 7: receives decrypted contract */
